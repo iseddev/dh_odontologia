@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>Odontología DH | Alta Odontólogo</title>
+    <title>Odontología DH | Alta Paciente</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -117,48 +117,118 @@
         </div>
         <div class="row justify-content-center">
           <div class="form-container col-sm-8">
-            <h3>Agregar un Odontólogo</h3>
-            <form id="add_new_odontologo">
+            <h3>Agregar un Paciente</h3>
+            <form id="add_new_paciente">
               <div class="form-group">
-                <label class="control-label" for="nombre">Nombre:</label>
+                <label class="control-label" for="paciente_nombre"
+                  >Nombre:</label
+                >
                 <input
                   type="text"
                   class="form-control"
-                  id="nombre"
-                  placeholder="Ingrese el nombre"
-                  name="nombre"
+                  id="paciente_nombre"
+                  placeholder="Ingrese el Nombre"
+                  name="paciente_nombre"
                   required
                 />
               </div>
               <div class="form-group">
-                <label class="control-label" for="apellido">Apellido:</label>
+                <label class="control-label" for="paciente_apellido"
+                  >Apellido:</label
+                >
                 <input
                   type="text"
                   class="form-control"
-                  id="apellido"
-                  placeholder="Ingrese el apellido"
-                  name="apellido"
+                  id="paciente_apellido"
+                  placeholder="Ingrese el Apellido"
+                  name="paciente_apellido"
                   required
                 />
               </div>
               <div class="form-group">
-                <label class="control-label" for="matricula">Matrícula:</label>
+                <label class="control-label" for="paciente_dni">DNI:</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="matricula"
-                  placeholder="Ingrese la matricula"
-                  name="matricula"
+                  id="paciente_dni"
+                  placeholder="Ingrese el DNI"
+                  name="paciente_dni"
                   required
                 />
               </div>
-
+              <div class="form-group">
+                <label class="control-label" for="paciente_fecha_alta"
+                  >Fecha de alta:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="paciente_fecha_alta"
+                  placeholder="Ingrese la fecha de alta (YYYY-MM-DD)"
+                  name="paciente_fecha_alta"
+                  required
+                />
+              </div>
+              <hr />
+              <h4>Datos del domicilio</h4>
+              <div class="form-group">
+                <label class="control-label" for="domicilio_calle"
+                  >Calle:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="domicilio_calle"
+                  placeholder="Ingrese nombre de la calle"
+                  name="domicilio_calle"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="domicilio_numero"
+                  >Número:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="domicilio_numero"
+                  placeholder="Ingrese el número del domicilio"
+                  name="domicilio_numero"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="domicilio_localidad"
+                  >Localidad:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="domicilio_localidad"
+                  placeholder="Ingrese nombre de la Localidad"
+                  name="domicilio_localidad"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="domicilio_provincia"
+                  >Provincia:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="domicilio_provincia"
+                  placeholder="Ingrese nombre de la Provincia"
+                  name="domicilio_provincia"
+                  required
+                />
+              </div>
               <button
                 type="submit"
                 class="btn btn-primary"
                 id="btn-add-new-odontologo"
               >
-                Guardar odontólogo
+                Guardar paciente
               </button>
             </form>
             <div id="response" style="display: none; margin-top: 10px"></div>
@@ -171,7 +241,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script type="text/javascript" src="/js/sidebar-toggle.js"></script>
-    <script type="module" src="/js/post_odontologo.js"></script>
+    <script src="/js/sidebar-toggle.js"></script>
+    <script type="module" src="/js/post_paciente.js"></script>
   </body>
 </html>

@@ -1,24 +1,33 @@
 import { resetUploadForm } from "./reset_form.js";
 
-const addOdontologo = () => {
-  const formAddNewRecord = document.querySelector("#add_new_odontologo");
+const addPaciente = () => {
+  const formAddNewRecord = document.querySelector("#add_new_paciente");
 
   formAddNewRecord.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const responseContainer = document.querySelector("#response");
 
-    const odontologoData = {
-      nombre: document.querySelector("#nombre").value,
-      apellido: document.querySelector("#apellido").value,
-      matricula: document.querySelector("#matricula").value,
+    const domicilioData = {
+      calle: document.querySelector("#domicilio_calle").value,
+      numero: document.querySelector("#domicilio_numero").value,
+      localidad: document.querySelector("#domicilio_localidad").value,
+      provincia: document.querySelector("#domicilio_provincia").value,
     };
 
-    const url = "/odontologo/create";
+    const pacienteData = {
+      nombre: document.querySelector("#paciente_nombre").value,
+      apellido: document.querySelector("#paciente_apellido").value,
+      dni: document.querySelector("#paciente_dni").value,
+      fecha_alta: document.querySelector("#paciente_fecha_alta").value,
+      domicilio: domicilioData,
+    };
+
+    const url = "/paciente/create";
     const settings = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(odontologoData),
+      body: JSON.stringify(pacienteData),
     };
 
     fetch(url, settings)
@@ -27,7 +36,7 @@ const addOdontologo = () => {
         const successContent = `
           <div class="alert alert-success alert-dismissible success-added">
             <i class="lni lni-thumbs-up icon"></i>
-            <strong>Odontólogo agregado correctamente</strong>
+            <strong>Paciente agregado correctamente</strong>
           </div>`;
         responseContainer.innerHTML = successContent;
         responseContainer.style.display = "block";
@@ -48,4 +57,4 @@ const addOdontologo = () => {
   });
 };
 
-window.addEventListener("load", () => addOdontologo());
+window.addEventListener("load", () => addPaciente());

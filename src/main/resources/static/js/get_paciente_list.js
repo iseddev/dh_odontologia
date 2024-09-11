@@ -8,7 +8,7 @@ const renderPacienteList = (data, pacienteTableId) => {
     const updateButton = `<button id="btn_id_${paciente.id}" type="button" class="btn btn-info btn_id" onclick="renderUpdateForm(${paciente.id})" title="Actualizar éste registro">${paciente.id}</button>`;
 
     const deleteButton = `
-      <button id="btn_delete_${paciente.id}" type="button" class="btn btn-danger btn_delete" title="Eliminar este registro" onclick="deleteOdontologo(${paciente.id})">
+      <button id="btn_delete_${paciente.id}" type="button" class="btn btn-danger btn_delete" title="Eliminar este registro" onclick="deletePaciente(${paciente.id})">
         <i class="lni lni-trash-can"></i>
       </button>`;
 
@@ -17,7 +17,7 @@ const renderPacienteList = (data, pacienteTableId) => {
       <td class="td_nombre">${paciente.nombre.toUpperCase()}</td>
       <td class="td_apellido">${paciente.apellido.toUpperCase()}</td>
       <td class="td_dni">${paciente.dni.toUpperCase()}</td>
-      <td class="td_fecha_alta">${paciente.fecha_alta}</td>
+      <td class="td_fecha_alta">${paciente.fechaAlta}</td>
       <td class="td_calle">${paciente.domicilio.calle.toUpperCase()}</td>
       <td class="td_numero">${paciente.domicilio.numero}</td>
       <td class="td_localidad">${paciente.domicilio.localidad.toUpperCase()}</td>

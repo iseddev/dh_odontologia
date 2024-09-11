@@ -1,9 +1,6 @@
 package com.banckend1.ReservaTurnos.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,14 +17,16 @@ import java.time.LocalDate;
 public class Turno {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "odontologo_id")
     private Odontologo odontologo;
 
     @ManyToOne
+    @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
     private LocalDate fecha;
-
 }

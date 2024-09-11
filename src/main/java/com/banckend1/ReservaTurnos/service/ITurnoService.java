@@ -8,6 +8,7 @@ public interface ITurnoService {
 
   Turno insertTurno(Turno turno);
   Turno selectTurno(Long id);
+  void updateTurno(Turno turno);
   List<Turno> selectAll();
   void deleteTurno(Long id);
 }

@@ -2,6 +2,8 @@ package com.banckend1.ReservaTurnos.controller;
 
 import com.banckend1.ReservaTurnos.entity.Turno;
 import com.banckend1.ReservaTurnos.service.ITurnoService;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +14,10 @@ import java.util.List;
 public class TurnoController {
 
   private final ITurnoService turnoService;
-  public TurnoController(ITurnoService turnoService) { this.turnoService = turnoService; }
+
+  public TurnoController(ITurnoService turnoService) {
+    this.turnoService = turnoService;
+  }
 
   // Create(insert) new Turno
   @PostMapping("/create")
@@ -31,10 +36,17 @@ public class TurnoController {
     List<Turno> turnoList = turnoService.selectAll();
     return ResponseEntity.ok(turnoList);
   }
+
+  @PutMapping("/edit")
+  public ResponseEntity<Turno> updateTurno(@RequestBody Turno turno) {
+    turnoService.updateTurno(turno);
+    return ResponseEntity.status(HttpStatus.OK).body(turno);
+  }
+
   // Delete a Turno
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<Void> deleteTurno(@PathVariable Long id) {
     turnoService.deleteTurno(id);
-    return ResponseEntity.noContent().build(); // 204 No Content
+    return ResponseEntity.noContent().build();
   }
 }

@@ -27,6 +27,11 @@ public class ImplTurnoService implements ITurnoService {
   }
 
   @Override
+  public void updateTurno(Turno turno) {
+    turnoRepository.save(turno);
+  }
+
+  @Override
   public List<Turno> selectAll() {
     return turnoRepository.findAll();
   }

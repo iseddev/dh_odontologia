@@ -21,12 +21,12 @@ public class Turno {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "odontologo_id")
+    @JoinColumn(name = "odontologo_id", nullable = false)
     private Odontologo odontologo;
 
     @ManyToOne
-    @JoinColumn(name = "paciente_id")
-    private Paciente paciente;
+    @JoinColumn(name = "paciente_id", nullable = false)
+    private Paciente paciente; // Ensure this is defined
 
     private LocalDate fecha;
 }

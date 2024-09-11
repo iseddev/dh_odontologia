@@ -1,6 +1,5 @@
 package com.banckend1.ReservaTurnos.controller;
 
-import com.banckend1.ReservaTurnos.entity.Odontologo;
 import com.banckend1.ReservaTurnos.entity.Turno;
 import com.banckend1.ReservaTurnos.service.ITurnoService;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +22,6 @@ public class TurnoController {
 
   @GetMapping("/find/{id}")
   public ResponseEntity<Turno> getTurno(@PathVariable Long id) {
-
-    // TODO que pasa si el id del paciente o del odontologo
-    // que recibe el turno no existen
     return ResponseEntity.ok(turnoService.selectTurno(id));
   }
 
@@ -34,5 +30,11 @@ public class TurnoController {
   public ResponseEntity<List<Turno>> turnoList() {
     List<Turno> turnoList = turnoService.selectAll();
     return ResponseEntity.ok(turnoList);
+  }
+  // Delete a Turno
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<Void> deleteTurno(@PathVariable Long id) {
+    turnoService.deleteTurno(id);
+    return ResponseEntity.noContent().build(); // 204 No Content
   }
 }

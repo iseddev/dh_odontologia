@@ -136,22 +136,24 @@
                     <th colspan="5">Datos Personales</th>
                     <th colspan="4">Domicilio</th>
                   </tr>
-                  <th>Id</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>DNI</th>
-                  <th>Fecha Alta</th>
-                  <th>Calle</th>
-                  <th>Numero</th>
-                  <th>Localidad</th>
-                  <th>Provincia</th>
+                  <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>Fecha Alta</th>
+                    <th>Calle</th>
+                    <th>Numero</th>
+                    <th>Localidad</th>
+                    <th>Provincia</th>
+                  </tr>
                 </thead>
                 <tbody id="paciente-table-body"></tbody>
               </table>
             </div>
           </div>
           <div
-            class="col-sm-8"
+            class="col-sm-10"
             id="update-form-container"
             style="
               display: none;
@@ -201,7 +203,7 @@
               <div class="form-group">
                 <label>Fecha Alta</label>
                 <input
-                  type="text"
+                  type="date"
                   class="form-control"
                   placeholder="fecha_alta"
                   id="paciente_fecha_alta"
@@ -249,7 +251,7 @@
             </form>
             <div id="update-response" style="display: none; margin: 10px"></div>
           </div>
-        </div>
+        </div>        
       </main>
     </div>
     <script

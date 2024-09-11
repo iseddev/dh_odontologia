@@ -1,4 +1,4 @@
-import { resetUploadForm } from "./reset_form.js";
+import { resetUploadForm } from "../reset_form.js";
 
 const addTurno = () => {
   const formAddNewTurno = document.querySelector("#add_new_turno");

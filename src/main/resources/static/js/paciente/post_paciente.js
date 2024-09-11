@@ -1,4 +1,4 @@
-import { resetUploadForm } from "./reset_form.js";
+import { resetUploadForm } from "../reset_form.js";
 
 const addPaciente = () => {
   const formAddNewRecord = document.querySelector("#add_new_paciente");

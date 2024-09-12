@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/odontologo")
@@ -53,6 +52,6 @@ public class OdontologoController {
   @DeleteMapping ("/delete/{id}")
   public ResponseEntity<?> deleteOdontologo(@PathVariable Long id){
     odontologoService.deleteOdontologo(id);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.ok("Se eliminó el odontologo con id: " + id + " exitosamente");
   }
 }

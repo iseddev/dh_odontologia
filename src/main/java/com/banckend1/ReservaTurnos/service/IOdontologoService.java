@@ -3,7 +3,6 @@ package com.banckend1.ReservaTurnos.service;
 import com.banckend1.ReservaTurnos.entity.Odontologo;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IOdontologoService {
 

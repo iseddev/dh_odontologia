@@ -3,6 +3,7 @@ package com.banckend1.ReservaTurnos.service.impl;
 import com.banckend1.ReservaTurnos.entity.Odontologo;
 import com.banckend1.ReservaTurnos.repository.IOdontologoRepository;
 import com.banckend1.ReservaTurnos.service.IOdontologoService;
+import com.banckend1.ReservaTurnos.exception.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,19 +18,50 @@ public class ImplOdontologoService implements IOdontologoService {
   }
 
   @Override
-  public Odontologo insertOdontologo(Odontologo odontologo) { return odontologoRepository.save(odontologo); }
+  public Odontologo insertOdontologo(Odontologo odontologo) {
+    if (odontologo.getNombre() == null || odontologo.getNombre().isEmpty() ||
+        odontologo.getApellido() == null || odontologo.getApellido().isEmpty() ||
+        odontologo.getMatricula() == null || odontologo.getMatricula().isEmpty()) {
+
+      throw new BadRequestException("Los campos nombre, apellido y matrícula son obligatorios.");
+    }
+
+    return odontologoRepository.save(odontologo);
+  }
 
   @Override
-  public Odontologo selectOdontologo(Long id) { return odontologoRepository.findById(id).orElse(null); }
+  public Odontologo selectOdontologo(Long id) {
+    return odontologoRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Odontólogo con id " + id + " no existe."));
+  }
 
   @Override
-  public List<Odontologo> selectAll() { return odontologoRepository.findAll(); }
+  public List<Odontologo> selectAll() {
+    return odontologoRepository.findAll();
+  }
 
   @Override
-  public void updateOdontologo(Odontologo odontologo) { odontologoRepository.save(odontologo); }
+  public void updateOdontologo(Odontologo odontologo) {
+    if (!odontologoRepository.existsById(odontologo.getId())) {
+      throw new ResourceNotFoundException("Odontólogo con id " + odontologo.getId() + " no existe.");
+    }
+
+    // Validate that the required fields are not empty
+    if (odontologo.getNombre() == null || odontologo.getNombre().isEmpty() ||
+        odontologo.getApellido() == null || odontologo.getApellido().isEmpty() ||
+        odontologo.getMatricula() == null || odontologo.getMatricula().isEmpty()) {
+
+      throw new BadRequestException("Los campos nombre, apellido y matrícula son obligatorios para la actualización.");
+    }
+
+    odontologoRepository.save(odontologo);
+  }
 
   @Override
   public void deleteOdontologo(Long id) {
+    if (!odontologoRepository.existsById(id)) {
+      throw new ResourceNotFoundException("Odontólogo con id " + id + " no existe.");
+    }
     odontologoRepository.deleteById(id);
   }
 }

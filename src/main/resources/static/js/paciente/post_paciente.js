@@ -31,7 +31,15 @@ const addPaciente = () => {
     };
 
     fetch(url, settings)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((errorText) => {
+            // Lanza un error con el mensaje proporcionado por el backend
+            throw new Error(errorText || "Error en la creación del paciente");
+          });
+        }
+        return response.json(); // Si es exitoso, devuelve el cuerpo JSON
+      })
       .then(() => {
         const successContent = `
           <div class="alert alert-success alert-dismissible success-added">
@@ -44,10 +52,13 @@ const addPaciente = () => {
         setTimeout(() => (responseContainer.style.display = "none"), 3000);
       })
       .catch((error) => {
+        let errorMessage = "Error desconocido";
+        errorMessage = error.message;
+
         const errorContent = `
           <div class="alert alert-danger alert-dismissible">
             <i class="lni lni-thumbs-down icon"></i>
-            <strong>Ya existe un paciente con el mismo DNI</strong>
+            <strong>Error: ${errorMessage}</strong>
           </div>`;
         responseContainer.innerHTML = errorContent;
         responseContainer.style.display = "block";

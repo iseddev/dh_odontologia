@@ -4,6 +4,8 @@ import com.banckend1.ReservaTurnos.entity.Odontologo;
 import com.banckend1.ReservaTurnos.repository.IOdontologoRepository;
 import com.banckend1.ReservaTurnos.service.IOdontologoService;
 import com.banckend1.ReservaTurnos.exception.*;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,12 @@ public class ImplOdontologoService implements IOdontologoService {
       throw new BadRequestException("Los campos nombre, apellido y matrícula son obligatorios.");
     }
 
+    // Check if an odontólogo with the same matrícula already exists
+    if (odontologoRepository.existsByMatricula(odontologo.getMatricula())) {
+      throw new HandleConflictException("Ya existe un odontólogo con la matrícula " + odontologo.getMatricula());
+    }
+
+    // Save the odontólogo if all validations pass
     return odontologoRepository.save(odontologo);
   }
 

@@ -21,6 +21,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>("Petición incorrecta: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    // Maneja excepciones de conflicto
+    @ExceptionHandler(HandleConflictException.class)
+    public ResponseEntity<String> handleConflictException(HandleConflictException ex, WebRequest request) {
+        return new ResponseEntity<>("Conflicto: " + ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
     // Maneja excepciones generales
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> globalExceptionHandler(Exception ex, WebRequest request) {

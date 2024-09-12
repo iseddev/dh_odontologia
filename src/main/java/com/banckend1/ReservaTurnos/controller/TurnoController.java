@@ -32,8 +32,12 @@ public class TurnoController {
 
   // Read(select) all Turnos
   @GetMapping("/list")
-  public ResponseEntity<List<Turno>> turnoList() {
+  public ResponseEntity<?> turnoList() {
     List<Turno> turnoList = turnoService.selectAll();
+
+    if (turnoList.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay turnos registrados en la base de datos");
+    }
     return ResponseEntity.ok(turnoList);
   }
 
@@ -45,8 +49,8 @@ public class TurnoController {
 
   // Delete a Turno
   @DeleteMapping("/delete/{id}")
-  public ResponseEntity<Void> deleteTurno(@PathVariable Long id) {
+  public ResponseEntity<?> deleteTurno(@PathVariable Long id) {
     turnoService.deleteTurno(id);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.status(HttpStatus.OK).body("Se eliminó el turno con id: " + id + " exitosamente");
   }
 }

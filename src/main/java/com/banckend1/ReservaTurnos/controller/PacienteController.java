@@ -25,21 +25,23 @@ public class PacienteController {
     return ResponseEntity.status(HttpStatus.CREATED).body(newPaciente);
   }
 
-
   // Read(select) a Paciente
   @GetMapping("/find/{id}")
-  public ResponseEntity<Paciente> getPaciente(@PathVariable Long id){
+  public ResponseEntity<Paciente> getPaciente(@PathVariable Long id) {
     return ResponseEntity.ok(pacienteService.selectPaciente(id));
   }
 
-
   // Read(select) all Pacientes
   @GetMapping("/list")
-  public ResponseEntity<List<Paciente>> pacienteList() {
+  public ResponseEntity<?> pacienteList() {
     List<Paciente> pacienteList = pacienteService.selectAll();
+
+    if (pacienteList.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay pacientes registrados en la base de datos");
+    }
+
     return ResponseEntity.ok(pacienteList);
   }
-
 
   // Update(update) a Paciente
   @PutMapping("/edit")
@@ -48,11 +50,10 @@ public class PacienteController {
     return ResponseEntity.status(HttpStatus.OK).body(paciente);
   }
 
-
   // Delete(delete) a Paciente
-  @DeleteMapping ("/delete/{id}")
-  public ResponseEntity<?> deletePaciente(@PathVariable Long id){
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<?> deletePaciente(@PathVariable Long id) {
     pacienteService.deletePaciente(id);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.ok("Se eliminó paciente con id: " + id + " exitosamente");
   }
 }

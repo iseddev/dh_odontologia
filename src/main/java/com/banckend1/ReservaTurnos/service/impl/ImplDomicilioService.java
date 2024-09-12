@@ -3,6 +3,7 @@ package com.banckend1.ReservaTurnos.service.impl;
 import com.banckend1.ReservaTurnos.entity.Domicilio;
 import com.banckend1.ReservaTurnos.repository.IDomicilioRepository;
 import com.banckend1.ReservaTurnos.service.IDomicilioService;
+import com.banckend1.ReservaTurnos.exception.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,18 @@ public class ImplDomicilioService implements IDomicilioService {
   }
 
   @Override
-  public Domicilio insertDomicilio(Domicilio domicilio) { return domicilioRepository.save(domicilio); }
+  public Domicilio insertDomicilio(Domicilio domicilio) {
+    // Validate mandatory fields
+    if (domicilio.getCalle() == null || domicilio.getCalle().isEmpty() ||
+        domicilio.getNumero() == null || domicilio.getNumero() <= 0 ||
+        domicilio.getLocalidad() == null || domicilio.getLocalidad().isEmpty() ||
+        domicilio.getProvincia() == null || domicilio.getProvincia().isEmpty()) {
+
+      throw new BadRequestException("Los campos calle, número, localidad y provincia son obligatorios.");
+    }
+
+    return domicilioRepository.save(domicilio);
+  }
 
   @Override
   public Domicilio selectDomicilio(Long id) { return domicilioRepository.findById(id).orElse(null); }

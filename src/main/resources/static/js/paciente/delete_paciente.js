@@ -1,6 +1,6 @@
 const deletePaciente = (id) => {
   let confirmDelete = confirm(
-    `Se eliminará el registro con id ${id}, presiona OK (Aceptar) para confirmar esta acción.`
+    `Se eliminará el paciente con id ${id}, presiona (Aceptar) para confirmar esta acción.`
   );
   confirmDelete
     ? deleteById("/paciente/delete/", id)

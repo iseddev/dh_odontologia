@@ -76,7 +76,14 @@ const updateTurno = () => {
     };
 
     fetch(url, settings)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((errorText) => {
+            throw new Error(errorText || "Error en la actualización del turno");
+          });
+        }
+        return response.json();
+      })
       .then(() => {
         const successContent = `
           <div class="alert alert-success alert-dismissible success-added">
@@ -85,23 +92,32 @@ const updateTurno = () => {
           </div>`;
         responseContainer.innerHTML = successContent;
         responseContainer.style.display = "block";
+
+        // Ocultar el formulario después de 3 segundos y luego actualizar la fila
         setTimeout(() => {
-          updateForm.style.display = "none";
+          document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
-        }, 3000);
+
+          // Actualizar la fila del turno en la tabla
+          const row = document.querySelector(`#tr_${turnoData.id}`);
+          row.querySelector(".td_paciente").textContent = document.querySelector("#paciente_id option:checked").textContent;
+          row.querySelector(".td_odontologo").textContent = document.querySelector("#odontologo_id option:checked").textContent;
+          row.querySelector(".td_fecha").textContent = turnoData.fecha;
+        }, 2000); // El tiempo de 3 segundos coincide con la duración del mensaje de éxito
       })
       .catch((error) => {
+        const errorMessage = error.message;
         const errorContent = `
           <div class="alert alert-danger alert-dismissible">
             <i class="lni lni-thumbs-down icon"></i>
-            <strong>Error: ${error}</strong>
+            <strong>Error: ${errorMessage}</strong>
           </div>`;
         responseContainer.innerHTML = errorContent;
         responseContainer.style.display = "block";
         setTimeout(() => {
-          updateForm.style.display = "none";
+          document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
-        }, 3000);
+        }, 3500);
       });
   });
 };

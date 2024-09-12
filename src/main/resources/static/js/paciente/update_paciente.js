@@ -46,7 +46,7 @@ const updatePaciente = () => {
       calle: document.querySelector("#domicilio_calle").value,
       numero: document.querySelector("#domicilio_numero").value,
       localidad: document.querySelector("#domicilio_localidad").value,
-      provincia: document.querySelector("#domicilio_provincia").value
+      provincia: document.querySelector("#domicilio_provincia").value,
     };
 
     const pacienteData = { id, nombre, apellido, dni, fechaAlta, domicilio };
@@ -59,7 +59,14 @@ const updatePaciente = () => {
     };
 
     fetch(url, settings)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((errorText) => {
+            throw new Error(errorText || "Error en la actualización del paciente");
+          });
+        }
+        return response.json();
+      })
       .then(() => {
         const successContent = `
           <div class="alert alert-success alert-dismissible success-added">
@@ -68,23 +75,34 @@ const updatePaciente = () => {
           </div>`;
         responseContainer.innerHTML = successContent;
         responseContainer.style.display = "block";
+
+        // Ocultar el formulario después de 3 segundos y luego actualizar la fila
         setTimeout(() => {
-          updateForm.style.display = "none";
+          document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
-        }, 3000);
+
+          // Actualizar la fila del paciente en la tabla
+          const row = document.querySelector(`#tr_${id}`);
+          row.querySelector(".td_nombre").textContent = nombre.toUpperCase();
+          row.querySelector(".td_apellido").textContent = apellido.toUpperCase();
+          row.querySelector(".td_dni").textContent = dni;
+          row.querySelector(".td_fecha_alta").textContent = fechaAlta;
+          row.querySelector(".td_domicilio").textContent = `${domicilio.calle}, ${domicilio.numero}, ${domicilio.localidad}, ${domicilio.provincia}`;
+        }, 2000); // El tiempo de 3 segundos coincide con la duración del mensaje de éxito
       })
       .catch((error) => {
+        const errorMessage = error.message;
         const errorContent = `
           <div class="alert alert-danger alert-dismissible">
             <i class="lni lni-thumbs-down icon"></i>
-            <strong>Error de actualización: Ya existe un paciente con el mismo DNI</strong>
+            <strong>Error: ${errorMessage}</strong>
           </div>`;
         responseContainer.innerHTML = errorContent;
         responseContainer.style.display = "block";
         setTimeout(() => {
-          updateForm.style.display = "none";
+          document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
-        }, 3000);
+        }, 3500);
       });
   });
 };

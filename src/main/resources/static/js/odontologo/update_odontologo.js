@@ -65,7 +65,7 @@ const updateOdontologo = () => {
         const errorContent = `
           <div class="alert alert-danger alert-dismissible">
             <i class="lni lni-thumbs-down icon"></i>
-            <strong>Error: ${error}</strong>
+            <strong>Error de actualización: Ya existe un odontólogo con la misma matrícula</strong>
           </div>`;
         responseContainer.innerHTML = errorContent;
         responseContainer.style.display = "block";

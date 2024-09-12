@@ -21,7 +21,7 @@ const renderTurnoList = (data, turnoTableId) => {
   }
 };
 const listTurnos = () => {
-  const url = "/turno/list"; // Cambia esta URL si es necesario
+  const url = "/turno/list";
   const settings = { method: "GET" };
 
   fetch(url, settings)

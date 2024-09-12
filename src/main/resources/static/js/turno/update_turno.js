@@ -31,8 +31,8 @@ const renderUpdateForm = (id) => {
             </option>`).join('');
         });
 
-      // Establecer la fecha del turno
       document.querySelector("#turno_fecha").value = data.fecha;
+      document.querySelector("#turno_hora").value = data.hora;
 
       // Mostrar el contenedor del formulario
       updateContainer.style.display = "block";
@@ -65,7 +65,8 @@ const updateTurno = () => {
       paciente: {
         id: parseInt(document.querySelector("#paciente_id").value)
       },
-      fecha: document.querySelector("#turno_fecha").value
+      fecha: document.querySelector("#turno_fecha").value,
+      hora: document.querySelector("#turno_hora").value
     };
 
     const url = "/turno/edit";
@@ -93,7 +94,6 @@ const updateTurno = () => {
         responseContainer.innerHTML = successContent;
         responseContainer.style.display = "block";
 
-        // Ocultar el formulario después de 3 segundos y luego actualizar la fila
         setTimeout(() => {
           document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
@@ -103,7 +103,8 @@ const updateTurno = () => {
           row.querySelector(".td_paciente").textContent = document.querySelector("#paciente_id option:checked").textContent;
           row.querySelector(".td_odontologo").textContent = document.querySelector("#odontologo_id option:checked").textContent;
           row.querySelector(".td_fecha").textContent = turnoData.fecha;
-        }, 2000); // El tiempo de 3 segundos coincide con la duración del mensaje de éxito
+          row.querySelector(".td_hora").textContent = turnoData.hora;
+        }, 1500);
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -117,7 +118,7 @@ const updateTurno = () => {
         setTimeout(() => {
           document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
-        }, 3500);
+        }, 3000);
       });
   });
 };

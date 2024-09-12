@@ -95,6 +95,7 @@
                   <th>Paciente</th>
                   <th>Odontólogo</th>
                   <th>Fecha</th>
+                  <th>Hora</th>
                 </tr>
               </thead>
               <tbody id="turno-table-body"></tbody>
@@ -104,8 +105,7 @@
           <!-- Formulario de Modificación trasladado aquí -->
           <div id="update-form-container" style="display: none; background-color: #e6fffa; padding: 10px; border-radius: 3px;">
             <h5>Modificar Turno</h5>
-            <form id="update_turno_form">
-              <form id="update_paciente_form">
+              <form id="update_turno_form">
                 <div class="form-group"><label>Id:</label>
                   <input type="text" class="form-control" id="turno_id" readonly/>
                 </div>
@@ -120,6 +120,10 @@
               <div class="form-group">
                 <label class="control-label" for="turno_fecha">Fecha:</label>
                 <input type="date" class="form-control" id="turno_fecha" placeholder="Ingrese la fecha (YYYY-MM-DD)" name="turno_fecha" required />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="turno_hora">Hora:</label>
+                <input type="time" class="form-control" id="turno_hora" placeholder="Ingrese la hora (HH:MM)" name="turno_hora" required />
               </div>
               <button type="submit" class="btn btn-primary">Modificar</button>
             </form>

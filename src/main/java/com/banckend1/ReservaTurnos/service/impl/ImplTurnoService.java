@@ -28,46 +28,46 @@ public class ImplTurnoService implements ITurnoService {
 
   @Override
   public Turno insertTurno(Turno turno) {
-    // Validación de campos obligatorios
     if (turno.getOdontologo() == null ||
         turno.getPaciente() == null ||
-        turno.getFecha() == null) {
+        turno.getFecha() == null ||
+        turno.getHora() == null) {
 
-      throw new BadRequestException("Los campos odontólogo, paciente y fecha son obligatorios.");
+      throw new BadRequestException("Los campos odontólogo, paciente, fecha y hora son obligatorios.");
     }
 
-    // Cargar los datos completos del odontólogo y el paciente desde la base de
-    // datos
     Long odontologoId = turno.getOdontologo().getId();
     Long pacienteId = turno.getPaciente().getId();
 
-    // Buscar odontólogo por id
     Odontologo odontologo = odontologoRepository.findById(odontologoId)
         .orElseThrow(() -> new ResourceNotFoundException("Odontólogo con id " + odontologoId + " no existe."));
 
-    // Buscar paciente por id
     Paciente paciente = pacienteRepository.findById(pacienteId)
         .orElseThrow(() -> new ResourceNotFoundException("Paciente con id " + pacienteId + " no existe."));
 
-    // Verificar si el odontólogo ya tiene un turno asignado en la misma fecha
+    // Verificar conflictos para odontólogo
     List<Turno> turnosOdontologo = turnoRepository.findByOdontologoAndFecha(odontologo, turno.getFecha());
-    if (!turnosOdontologo.isEmpty()) {
-      throw new HandleConflictException("El odontólogo " + odontologo.getNombre() + " " +
-          odontologo.getApellido() + " ya tiene un turno asignado en la fecha " + turno.getFecha());
+    for (Turno t : turnosOdontologo) {
+      if (t.getHora().equals(turno.getHora())) {
+        throw new HandleConflictException("El odontólogo " + odontologo.getNombre() + " " +
+            odontologo.getApellido() + " ya tiene un turno asignado en la fecha " + turno.getFecha() +
+            " a la hora " + turno.getHora());
+      }
     }
 
-    // Verificar si el paciente ya tiene un turno asignado en la misma fecha
+    // Verificar conflictos para paciente
     List<Turno> turnosPaciente = turnoRepository.findByPacienteAndFecha(paciente, turno.getFecha());
-    if (!turnosPaciente.isEmpty()) {
-      throw new HandleConflictException("El paciente " + paciente.getNombre() + " " +
-          paciente.getApellido() + " ya tiene un turno asignado en la fecha " + turno.getFecha());
+    for (Turno t : turnosPaciente) {
+      if (t.getHora().equals(turno.getHora())) {
+        throw new HandleConflictException("El paciente " + paciente.getNombre() + " " +
+            paciente.getApellido() + " ya tiene un turno asignado en la fecha " + turno.getFecha() +
+            " a la hora " + turno.getHora());
+      }
     }
 
-    // Asignar los objetos completos al turno
     turno.setOdontologo(odontologo);
     turno.setPaciente(paciente);
 
-    // Guardar el turno en la base de datos
     return turnoRepository.save(turno);
   }
 
@@ -79,46 +79,50 @@ public class ImplTurnoService implements ITurnoService {
 
   @Override
   public void updateTurno(Turno turno) {
-    // Comprobar si el turno existe
     if (!turnoRepository.existsById(turno.getId())) {
       throw new ResourceNotFoundException("Turno con id " + turno.getId() + " no existe.");
     }
 
-    // Validación de campos obligatorios
     if (turno.getOdontologo() == null ||
         turno.getPaciente() == null ||
-        turno.getFecha() == null) {
-      throw new BadRequestException("Los campos odontólogo, paciente y fecha son obligatorios para la actualización.");
+        turno.getFecha() == null ||
+        turno.getHora() == null) {
+      throw new BadRequestException(
+          "Los campos odontólogo, paciente, fecha y hora son obligatorios para la actualización.");
     }
 
     Long odontologoId = turno.getOdontologo().getId();
     Long pacienteId = turno.getPaciente().getId();
 
-    // Buscar odontólogo por id
     Odontologo odontologo = odontologoRepository.findById(odontologoId)
         .orElseThrow(() -> new ResourceNotFoundException("Odontólogo con id " + odontologoId + " no existe."));
 
-    // Buscar paciente por id
     Paciente paciente = pacienteRepository.findById(pacienteId)
         .orElseThrow(() -> new ResourceNotFoundException("Paciente con id " + pacienteId + " no existe."));
 
+    // Verificar conflictos para odontólogo
     List<Turno> turnosOdontologo = turnoRepository.findByOdontologoAndFecha(odontologo, turno.getFecha());
-    if (!turnosOdontologo.isEmpty() && !turnosOdontologo.stream().anyMatch(t -> t.getId().equals(turno.getId()))) {
-      throw new HandleConflictException("El odontólogo " + odontologo.getNombre() + " " +
-          odontologo.getApellido() + " ya tiene un turno asignado en la fecha " + turno.getFecha());
+    for (Turno t : turnosOdontologo) {
+      if (t.getHora().equals(turno.getHora()) && !t.getId().equals(turno.getId())) {
+        throw new HandleConflictException("El odontólogo " + odontologo.getNombre() + " " +
+            odontologo.getApellido() + " ya tiene un turno asignado en la fecha " + turno.getFecha() +
+            " a la hora " + turno.getHora());
+      }
     }
 
+    // Verificar conflictos para paciente
     List<Turno> turnosPaciente = turnoRepository.findByPacienteAndFecha(paciente, turno.getFecha());
-    if (!turnosPaciente.isEmpty() && !turnosPaciente.stream().anyMatch(t -> t.getId().equals(turno.getId()))) {
-      throw new HandleConflictException("El paciente " + paciente.getNombre() + " " +
-          paciente.getApellido() + " ya tiene un turno asignado en la fecha " + turno.getFecha());
+    for (Turno t : turnosPaciente) {
+      if (t.getHora().equals(turno.getHora()) && !t.getId().equals(turno.getId())) {
+        throw new HandleConflictException("El paciente " + paciente.getNombre() + " " +
+            paciente.getApellido() + " ya tiene un turno asignado en la fecha " + turno.getFecha() +
+            " a la hora " + turno.getHora());
+      }
     }
 
-    // Asignar los objetos completos al turno
     turno.setOdontologo(odontologo);
     turno.setPaciente(paciente);
 
-    // Guardar el turno actualizado en la base de datos
     turnoRepository.save(turno);
   }
 

@@ -16,6 +16,7 @@ const addTurno = () => {
         id: parseInt(document.querySelector("#paciente_id").value),
       },
       fecha: document.querySelector("#turno_fecha").value,
+      hora: document.querySelector("#turno_hora").value,
     };
 
     const url = "/turno/create";
@@ -29,11 +30,10 @@ const addTurno = () => {
       .then((response) => {
         if (!response.ok) {
           return response.text().then((errorText) => {
-            // Lanza un error con el mensaje proporcionado por el backend
             throw new Error(errorText || "Error en la creación del turno");
           });
         }
-        return response.json(); // Si es exitoso, devuelve el cuerpo JSON
+        return response.json();
       })
       .then(() => {
         const successContent = `
@@ -44,14 +44,12 @@ const addTurno = () => {
         responseContainer.innerHTML = successContent;
         responseContainer.style.display = "block";
         resetUploadForm(".form-control");
-        setTimeout(() => (responseContainer.style.display = "none"), 3000);
+        setTimeout(() => (responseContainer.style.display = "none"), 1500);
       })
       .catch((error) => {
-        // Manejar mensajes específicos de error
         let errorMessage = "Error desconocido";
         errorMessage = error.message;
 
-        // Muestra el mensaje de error capturado
         const errorContent = `
           <div class="alert alert-danger alert-dismissible">
             <i class="lni lni-thumbs-down icon"></i>

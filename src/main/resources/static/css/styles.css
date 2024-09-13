@@ -179,13 +179,8 @@ a.sidebar-link:hover {
   min-height: 100vh;
 }
 
-.main-header {
-  margin-bottom: 2rem;
-}
-
 .main-content {
   height: 100%;
-  padding-top: 2rem;
 }
 
 .main-img__container {
@@ -193,8 +188,7 @@ a.sidebar-link:hover {
 }
 
 .main-title {
-  padding-top: 4rem;
-  font-size: 4rem;
+  font-size: 3.2rem;
   font-weight: bold;
   margin-bottom: 1rem;
   color: #3b7ddd;

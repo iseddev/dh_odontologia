@@ -78,6 +78,10 @@ public class ImplPacienteService implements IPacienteService {
       throw new HandleConflictException("Ya existe un paciente con el DNI " + paciente.getDni());
     }
 
+    // Validar y guardar el domicilio
+    if (paciente.getDomicilio() == null) {
+      throw new BadRequestException("El paciente debe tener un domicilio.");
+    }
     pacienteRepository.save(paciente);
   }
 

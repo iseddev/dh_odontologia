@@ -76,7 +76,6 @@ const updatePaciente = () => {
         responseContainer.innerHTML = successContent;
         responseContainer.style.display = "block";
 
-        // Ocultar el formulario después de 3 segundos y luego actualizar la fila
         setTimeout(() => {
           document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
@@ -88,7 +87,7 @@ const updatePaciente = () => {
           row.querySelector(".td_dni").textContent = dni;
           row.querySelector(".td_fecha_alta").textContent = fechaAlta;
           row.querySelector(".td_domicilio").textContent = `${domicilio.calle}, ${domicilio.numero}, ${domicilio.localidad}, ${domicilio.provincia}`;
-        }, 2000); // El tiempo de 3 segundos coincide con la duración del mensaje de éxito
+        }, 1500);
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -102,7 +101,7 @@ const updatePaciente = () => {
         setTimeout(() => {
           document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
-        }, 3500);
+        }, 3000);
       });
   });
 };

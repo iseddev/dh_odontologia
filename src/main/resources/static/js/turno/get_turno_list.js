@@ -17,6 +17,7 @@ const renderTurnoList = (data, turnoTableId) => {
       <td class="td_paciente">${turno.paciente.nombre.toUpperCase()} ${turno.paciente.apellido.toUpperCase()}</td>
       <td class="td_odontologo">${turno.odontologo.nombre.toUpperCase()} ${turno.odontologo.apellido.toUpperCase()}</td>
       <td class="td_fecha">${turno.fecha}</td>
+      <td class="td_hora">${turno.hora}</td>
       <td class="td_btn_delete">${deleteButton}</td>`;
   }
 };

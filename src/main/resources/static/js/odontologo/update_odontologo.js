@@ -63,7 +63,6 @@ const updateOdontologo = () => {
         responseContainer.innerHTML = successContent;
         responseContainer.style.display = "block";
 
-        // Ocultar el formulario después de 3 segundos y luego actualizar la fila
         setTimeout(() => {
           document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
@@ -73,7 +72,7 @@ const updateOdontologo = () => {
           row.querySelector(".td_nombre").textContent = nombre.toUpperCase();
           row.querySelector(".td_apellido").textContent = apellido.toUpperCase();
           row.querySelector(".td_matricula").textContent = matricula;
-        }, 2000); // El tiempo de 3 segundos coincide con la duración del mensaje de éxito
+        }, 1500);
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -87,7 +86,7 @@ const updateOdontologo = () => {
         setTimeout(() => {
           document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
-        }, 3500);
+        }, 3000);
       });
   });
 };

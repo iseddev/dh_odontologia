@@ -34,11 +34,10 @@ const addPaciente = () => {
       .then((response) => {
         if (!response.ok) {
           return response.text().then((errorText) => {
-            // Lanza un error con el mensaje proporcionado por el backend
             throw new Error(errorText || "Error en la creación del paciente");
           });
         }
-        return response.json(); // Si es exitoso, devuelve el cuerpo JSON
+        return response.json();
       })
       .then(() => {
         const successContent = `
@@ -49,7 +48,7 @@ const addPaciente = () => {
         responseContainer.innerHTML = successContent;
         responseContainer.style.display = "block";
         resetUploadForm(".form-control");
-        setTimeout(() => (responseContainer.style.display = "none"), 3000);
+        setTimeout(() => (responseContainer.style.display = "none"), 1500);
       })
       .catch((error) => {
         let errorMessage = "Error desconocido";

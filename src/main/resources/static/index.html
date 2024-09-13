@@ -11,7 +11,7 @@
       crossorigin="anonymous"
     />
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   </head>
   <body>
@@ -21,7 +21,7 @@
           <button id="sidebar-toggle" class="sidebar-toggle" type="button">
             <i class="lni lni-magnifier toggle-icon"></i>
           </button>
-          <div class="sidebar-logo"><a href="/">Inicio</a></div>
+          <div class="sidebar-logo"><a href="./">Inicio</a></div>
         </div>
         <ul class="sidebar-nav">
           <li class="sidebar-item">
@@ -42,12 +42,12 @@
               data-bs-parent="#sidebar"
             >
               <li class="sidebar-item">
-                <a href="/odontologos-alta.html" class="sidebar-link"
+                <a href="./odontologos-alta.html" class="sidebar-link"
                   >Alta Odontólogo</a
                 >
               </li>
               <li class="sidebar-item">
-                <a href="/odontologos-lista.html" class="sidebar-link"
+                <a href="./odontologos-lista.html" class="sidebar-link"
                   >Listar Odontólogos</a
                 >
               </li>
@@ -71,12 +71,12 @@
               data-bs-parent="#sidebar"
             >
               <li class="sidebar-item">
-                <a href="/pacientes-alta.html" class="sidebar-link"
+                <a href="./pacientes-alta.html" class="sidebar-link"
                   >Alta Paciente</a
                 >
               </li>
               <li class="sidebar-item">
-                <a href="/pacientes-lista.html" class="sidebar-link"
+                <a href="./pacientes-lista.html" class="sidebar-link"
                   >Listar Pacientes</a
                 >
               </li>
@@ -100,10 +100,10 @@
               data-bs-parent="#sidebar"
             >
               <li class="sidebar-item">
-                <a href="/turnos-alta.html" class="sidebar-link">Alta Turno</a>
+                <a href="./turnos-alta.html" class="sidebar-link">Alta Turno</a>
               </li>
               <li class="sidebar-item">
-                <a href="/turnos-lista.html" class="sidebar-link"
+                <a href="./turnos-lista.html" class="sidebar-link"
                   >Listar Turnos</a
                 >
               </li>
@@ -112,8 +112,69 @@
         </ul>
       </aside>
       <main class="main">
-        <div class="text-center">
-          <h1>Clínica Odontológica DH</h1>
+        <div class="container main-content">
+          <div class="row main-img__container">
+            <div class="col-md-6">
+              <div class="main-header">
+                <h1 class="main-title">
+                  Odontología <br /><span class="main-title__span">DH</span>
+                </h1>
+                <h3>Proyecto integrador final Backend I</h3>
+                <p>
+                  Este proyecto fue realizado por los alumnos de Digital House
+                  para el curso de Backend I.
+                </p>
+              </div>
+              <div class="main-cards">
+                <div class="row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">
+                          <i class="lni lni-rocket"></i>Danna Marin
+                        </h4>
+                        <p class="card-text">
+                          With supporting text below as a natural lead-in to
+                          additional content.
+                        </p>
+                        <a
+                          href="https://github.com/Dasomacha"
+                          target="_blank"
+                          class="btn btn-primary git-link"
+                          ><i class="lni lni-github-original git-icon"></i>Ver
+                          perfil</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">
+                          <i class="lni lni-code-alt"></i>Israel E. Porfirio
+                        </h4>
+                        <p class="card-text">
+                          With supporting text below as a natural lead-in to
+                          additional content.
+                        </p>
+                        <a
+                          href="https://github.com/iseddev"
+                          target="_blank"
+                          class="btn btn-primary git-link"
+                          ><i class="lni lni-github-original git-icon"></i>Ver
+                          perfil</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 align-content-center">
+              <img src="./img/medicine.svg" alt="Clínica Odontológica DH" />
+            </div>
+          </div>
+          <div class="text-center"></div>
         </div>
       </main>
     </div>

@@ -1,4 +1,4 @@
-import { resetUploadForm } from "./reset_form.js";
+import { resetUploadForm } from "../reset_form.js";
 
 const addPaciente = () => {
   const formAddNewRecord = document.querySelector("#add_new_paciente");
@@ -19,7 +19,7 @@ const addPaciente = () => {
       nombre: document.querySelector("#paciente_nombre").value,
       apellido: document.querySelector("#paciente_apellido").value,
       dni: document.querySelector("#paciente_dni").value,
-      fecha_alta: document.querySelector("#paciente_fecha_alta").value,
+      fechaAlta: document.querySelector("#paciente_fecha_alta").value,
       domicilio: domicilioData,
     };
 
@@ -31,7 +31,15 @@ const addPaciente = () => {
     };
 
     fetch(url, settings)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((errorText) => {
+            // Lanza un error con el mensaje proporcionado por el backend
+            throw new Error(errorText || "Error en la creación del paciente");
+          });
+        }
+        return response.json(); // Si es exitoso, devuelve el cuerpo JSON
+      })
       .then(() => {
         const successContent = `
           <div class="alert alert-success alert-dismissible success-added">
@@ -44,10 +52,13 @@ const addPaciente = () => {
         setTimeout(() => (responseContainer.style.display = "none"), 3000);
       })
       .catch((error) => {
+        let errorMessage = "Error desconocido";
+        errorMessage = error.message;
+
         const errorContent = `
           <div class="alert alert-danger alert-dismissible">
             <i class="lni lni-thumbs-down icon"></i>
-            <strong>Error: ${error}</strong>
+            <strong>Error: ${errorMessage}</strong>
           </div>`;
         responseContainer.innerHTML = errorContent;
         responseContainer.style.display = "block";

@@ -8,7 +8,7 @@ const renderPacienteList = (data, pacienteTableId) => {
     const updateButton = `<button id="btn_id_${paciente.id}" type="button" class="btn btn-info btn_id" onclick="renderUpdateForm(${paciente.id})" title="Actualizar éste registro">${paciente.id}</button>`;
 
     const deleteButton = `
-      <button id="btn_delete_${paciente.id}" type="button" class="btn btn-danger btn_delete" title="Eliminar este registro" onclick="deleteOdontologo(${paciente.id})">
+      <button id="btn_delete_${paciente.id}" type="button" class="btn btn-danger btn_delete" title="Eliminar este registro" onclick="deletePaciente(${paciente.id})">
         <i class="lni lni-trash-can"></i>
       </button>`;
 

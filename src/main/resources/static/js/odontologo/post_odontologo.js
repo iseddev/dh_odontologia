@@ -1,4 +1,4 @@
-import { resetUploadForm } from "./reset_form.js";
+import { resetUploadForm } from "../reset_form.js";
 
 const addOdontologo = () => {
   const formAddNewRecord = document.querySelector("#add_new_odontologo");
@@ -22,7 +22,15 @@ const addOdontologo = () => {
     };
 
     fetch(url, settings)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((errorText) => {
+            // Lanza un error con el mensaje proporcionado por el backend
+            throw new Error(errorText || "Error en la creación del odontólogo");
+          });
+        }
+        return response.json(); // Si es exitoso, devuelve el cuerpo JSON
+      })
       .then(() => {
         const successContent = `
           <div class="alert alert-success alert-dismissible success-added">
@@ -35,10 +43,13 @@ const addOdontologo = () => {
         setTimeout(() => (responseContainer.style.display = "none"), 3000);
       })
       .catch((error) => {
+        let errorMessage = "Error desconocido";
+        errorMessage = error.message;
+
         const errorContent = `
           <div class="alert alert-danger alert-dismissible">
             <i class="lni lni-thumbs-down icon"></i>
-            <strong>Error: ${error}</strong>
+            <strong>Error: ${errorMessage}</strong>
           </div>`;
         responseContainer.innerHTML = errorContent;
         responseContainer.style.display = "block";

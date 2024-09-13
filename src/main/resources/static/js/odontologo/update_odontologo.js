@@ -29,7 +29,6 @@ const updateOdontologo = () => {
 
   updateForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const updateForm = document.querySelector("#update_odontologo_form");
     const responseContainer = document.querySelector("#update-response");
 
     const id = document.querySelector("#odontologo_id").value;
@@ -47,7 +46,14 @@ const updateOdontologo = () => {
     };
 
     fetch(url, settings)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((errorText) => {
+            throw new Error(errorText || "Error en la actualización del odontólogo");
+          });
+        }
+        return response.json();
+      })
       .then(() => {
         const successContent = `
           <div class="alert alert-success alert-dismissible success-added">
@@ -56,23 +62,32 @@ const updateOdontologo = () => {
           </div>`;
         responseContainer.innerHTML = successContent;
         responseContainer.style.display = "block";
+
+        // Ocultar el formulario después de 3 segundos y luego actualizar la fila
         setTimeout(() => {
-          updateForm.style.display = "none";
+          document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
-        }, 3000);
+
+          // Actualizar la fila del odontólogo en la tabla
+          const row = document.querySelector(`#tr_${id}`);
+          row.querySelector(".td_nombre").textContent = nombre.toUpperCase();
+          row.querySelector(".td_apellido").textContent = apellido.toUpperCase();
+          row.querySelector(".td_matricula").textContent = matricula;
+        }, 2000); // El tiempo de 3 segundos coincide con la duración del mensaje de éxito
       })
       .catch((error) => {
+        const errorMessage = error.message;
         const errorContent = `
           <div class="alert alert-danger alert-dismissible">
             <i class="lni lni-thumbs-down icon"></i>
-            <strong>Error: ${error}</strong>
+            <strong>Error: ${errorMessage}</strong>
           </div>`;
         responseContainer.innerHTML = errorContent;
         responseContainer.style.display = "block";
         setTimeout(() => {
-          updateForm.style.display = "none";
+          document.querySelector("#update-form-container").style.display = "none";
           responseContainer.style.display = "none";
-        }, 3000);
+        }, 3500);
       });
   });
 };
